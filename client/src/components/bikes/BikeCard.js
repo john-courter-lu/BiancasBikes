@@ -13,7 +13,7 @@ export default function BikeCard({ bike, setDetailsBikeId }) {
       <CardBody>
         <CardTitle tag="h5">{bike.brand}</CardTitle>
         <CardSubtitle className="mb-2 text-muted" tag="h6">
-          Owner: {bike.owner.name}
+          Owner: {bike?.owner?.name}
         </CardSubtitle>
         <CardText>Color: {bike.color}</CardText>
         <Button
