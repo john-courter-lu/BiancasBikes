@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { getBikes } from "../../managers/bikeManager";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { createWorkOrder } from "../../managers/workOrderManager.js";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateWorkOrder({ loggedInUser }) {
   const [description, setDescription] = useState("");
   const [bikeId, setBikeId] = useState(0);
   const [bikes, setBikes] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,9 +18,9 @@ export default function CreateWorkOrder({ loggedInUser }) {
       description,
     };
 
-    console.log(
-      `new work order submitted: ${newWorkOrder.description}, bikeId: ${newWorkOrder.bikeId}`,
-    );
+    createWorkOrder(newWorkOrder).then(() => {
+      navigate("/workorders");
+    });
   };
 
   useEffect(() => {
