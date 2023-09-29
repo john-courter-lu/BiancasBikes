@@ -17,10 +17,30 @@ public class BikeController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]//only logged in users will be able to access it. 如果comment out, 则不需要登录就可查看
+    [Authorize]
+    //only logged in users will be able to access it. 如果comment out, 则不需要登录就可查看
     public IActionResult Get()
     {
         return Ok(_dbContext.Bikes.Include(b => b.Owner).ToList());
     }
 
+    // Get Bike Details by Id
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetById(int id) //Name GetById is not important. Route + HttpGet is.
+    {
+        var bike = _dbContext
+            .Bikes
+            .Include(b => b.Owner)
+            .Include(b => b.BikeType)
+            .Include(b => b.WorkOrders)
+            .SingleOrDefault(b => b.Id == id);
+
+        if (bike == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(bike);
+    }
 }
