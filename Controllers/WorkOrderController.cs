@@ -19,7 +19,7 @@ public class WorkOrderController : ControllerBase
 
     [HttpGet("incomplete")]
     [Authorize]
-    public IActionResult GetIncompleteWorkOrders() //first endpoint in the class, Name: GetIncompleteWorkOrder
+    public IActionResult GetIncompleteWorkOrders() //first endpoint in the class with the name: GetIncompleteWorkOrder
     {
         return Ok(_dbContext.WorkOrders
         .Include(wo => wo.Bike)
@@ -32,7 +32,7 @@ public class WorkOrderController : ControllerBase
         .ThenByDescending(wo => wo.UserProfileId == null).ToList());
 
         //The query in the method uses OrderBy and ThenByDescending to order the work orders first by when they were created, so that the oldest appear first. Then they are further sorted by whether an employee has been assigned to them or not. If the work order does not have a UserProfileId, it will appear before one that does.
-        
+
         //notice that we had to use Include twice for Bike. Once, to be able to call ThenInclude for Owner, and a second time to be able to call ThenInclude for BikeType.
     }
 }
