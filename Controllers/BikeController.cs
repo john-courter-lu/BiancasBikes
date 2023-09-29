@@ -17,10 +17,10 @@ public class BikeController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize]//only logged in users will be able to access it. 如果comment out, 则不需要登录就可查看
     public IActionResult Get()
     {
-        return Ok(_dbContext.Bikes.ToList());
+        return Ok(_dbContext.Bikes.Include(b => b.Owner).ToList());
     }
 
 }
