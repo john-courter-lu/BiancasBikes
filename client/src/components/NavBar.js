@@ -25,7 +25,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
   };
 
   useEffect(() => {
-    loggedInUser && getInventory();
+    loggedInUser && getInventory(); //We only want to call getInventory when there is a logged in user.
   }, [loggedInUser]);
 
   return (
