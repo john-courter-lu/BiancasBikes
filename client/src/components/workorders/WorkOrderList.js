@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Input, Table } from "reactstrap";
-import { getIncompleteWorkOrders, updateWorkOrder, completeWorkOrder } from "../../managers/workOrderManager.js";
+import { getIncompleteWorkOrders, updateWorkOrder, completeWorkOrder, deleteWorkOrder } from "../../managers/workOrderManager.js";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfiles } from "../../managers/userProfileManager.js";
 
@@ -106,11 +106,10 @@ export default function WorkOrderList({ loggedInUser }) {
     };
 
     const handleDeleteWorkOrder = (workOrderId) => {
-        console.log(`${workOrderId} deleted.`)
-        // deleteWorkOrder(workOrderId).then(() => {
-        //    getIncompleteWorkOrders().then(setWorkOrders);
-        //    navigate("/bikes"); // to improve: how to get the Count of Bikes in Garage updated without navigation/refreshing.
-        //  });
+        deleteWorkOrder(workOrderId).then(() => {
+           getIncompleteWorkOrders().then(setWorkOrders);
+           navigate("/bikes"); // to improve: how to get the Count of Bikes in Garage updated without navigation/refreshing.
+         });
    };
 
 
