@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Input, Table } from "reactstrap";
 import { getIncompleteWorkOrders } from "../../managers/workOrderManager.js";
 import { Link } from "react-router-dom";
+import { getUserProfiles } from "../../managers/userProfileManager.js";
 
 const testWorkOrders = [
     {
