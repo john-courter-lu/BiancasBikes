@@ -30,3 +30,14 @@ export const updateWorkOrder = (workOrder) => {
     body: JSON.stringify(workOrder),
   });
 };
+
+//Complete a work order; 
+//It's a POST with no body and no return, so no JSON.stringify and no .then((res) => res.json)
+export const completeWorkOrder = (id) => {
+  return fetch(`${_apiUrl}/${id}/complete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+};
