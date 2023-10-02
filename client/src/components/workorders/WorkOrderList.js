@@ -105,6 +105,15 @@ export default function WorkOrderList({ loggedInUser }) {
           });
     };
 
+    const handleDeleteWorkOrder = (workOrderId) => {
+        console.log(`${workOrderId} deleted.`)
+        // deleteWorkOrder(workOrderId).then(() => {
+        //    getIncompleteWorkOrders().then(setWorkOrders);
+        //    navigate("/bikes"); // to improve: how to get the Count of Bikes in Garage updated without navigation/refreshing.
+        //  });
+   };
+
+
     return (
         <>
             <h2>Open Work Orders</h2>
@@ -153,12 +162,20 @@ export default function WorkOrderList({ loggedInUser }) {
                             </td>
                             <td>
                                 {wo.userProfile && (
+                                    <>
                                     <Button
                                         onClick={() => handleCompleteWorkOrder(wo.id)}
                                         color="success"
                                     >
                                         Mark as Complete
                                     </Button>
+                                    <Button
+                                        onClick={() => handleDeleteWorkOrder(wo.id)}
+                                        color="danger"
+                                    >
+                                        Delete
+                                    </Button>
+                                    </>
                                 )}
                             </td>
                         </tr>
