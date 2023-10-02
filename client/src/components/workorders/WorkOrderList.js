@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Input, Table } from "reactstrap";
-import { getIncompleteWorkOrders, updateWorkOrder } from "../../managers/workOrderManager.js";
-import { Link } from "react-router-dom";
+import { getIncompleteWorkOrders, updateWorkOrder, completeWorkOrder } from "../../managers/workOrderManager.js";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserProfiles } from "../../managers/userProfileManager.js";
 
 const testWorkOrders = [
@@ -97,8 +97,12 @@ export default function WorkOrderList({ loggedInUser }) {
         });
     };
 
-    const completeWorkOrder = (workOrderId) => {
-        console.log(`Completed ${workOrderId}`);
+    const navigate = useNavigate();
+    const handleCompleteWorkOrder = (workOrderId) => {
+         completeWorkOrder(workOrderId).then(() => {
+            getIncompleteWorkOrders().then(setWorkOrders);
+            navigate("/bikes"); // to improve: how to get the Count of Bikes in Garage updated without navigation/refreshing.
+          });
     };
 
     return (
@@ -150,7 +154,7 @@ export default function WorkOrderList({ loggedInUser }) {
                             <td>
                                 {wo.userProfile && (
                                     <Button
-                                        onClick={() => completeWorkOrder(wo.id)}
+                                        onClick={() => handleCompleteWorkOrder(wo.id)}
                                         color="success"
                                     >
                                         Mark as Complete
