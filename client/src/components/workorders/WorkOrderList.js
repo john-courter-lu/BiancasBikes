@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Input, Table } from "reactstrap";
-import { getIncompleteWorkOrders } from "../../managers/workOrderManager.js";
+import { getIncompleteWorkOrders, updateWorkOrder } from "../../managers/workOrderManager.js";
 import { Link } from "react-router-dom";
 import { getUserProfiles } from "../../managers/userProfileManager.js";
 
@@ -90,7 +90,11 @@ export default function WorkOrderList({ loggedInUser }) {
     }, []);
 
     const assignMechanic = (workOrder, mechanicId) => {
-        console.log(`Assigned ${mechanicId} to ${workOrder.id}`);
+        const clone = structuredClone(workOrder);
+        clone.userProfileId = mechanicId || null;
+        updateWorkOrder(clone).then(() => {
+          getIncompleteWorkOrders().then(setWorkOrders);
+        });
     };
 
     const completeWorkOrder = (workOrderId) => {
