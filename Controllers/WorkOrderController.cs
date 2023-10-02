@@ -73,5 +73,24 @@ public class WorkOrderController : ControllerBase
 
         return NoContent();
     }
+
+    // Complete a work order
+    [HttpPost("{id}/complete")]
+    [Authorize]
+    public IActionResult CompleteWorkOrder( int id)
+    {
+        WorkOrder workOrderToUpdate = _dbContext.WorkOrders.SingleOrDefault(wo => wo.Id == id);
+        if (workOrderToUpdate == null)
+        {
+            return NotFound();
+        }
+     
+        //There is only one property that we want to make editable
+        workOrderToUpdate.DateCompleted = DateTime.Now;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
 
