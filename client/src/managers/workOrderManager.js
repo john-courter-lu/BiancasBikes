@@ -19,3 +19,14 @@ export const createWorkOrder = (workOrder) => {
       body: JSON.stringify(workOrder),
     }).then((res) => res.json);
   };
+
+//Update a work order
+export const updateWorkOrder = (workOrder) => {
+  return fetch(`${_apiUrl}/${workOrder.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(workOrder),
+  });
+};
