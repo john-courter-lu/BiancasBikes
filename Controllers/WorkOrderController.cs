@@ -77,20 +77,37 @@ public class WorkOrderController : ControllerBase
     // Complete a work order
     [HttpPost("{id}/complete")]
     [Authorize]
-    public IActionResult CompleteWorkOrder( int id)
+    public IActionResult CompleteWorkOrder(int id)
     {
         WorkOrder workOrderToUpdate = _dbContext.WorkOrders.SingleOrDefault(wo => wo.Id == id);
         if (workOrderToUpdate == null)
         {
             return NotFound();
         }
-     
+
         //There is only one property that we want to make editable
         workOrderToUpdate.DateCompleted = DateTime.Now;
 
         _dbContext.SaveChanges();
 
         return NoContent();
+    }
+
+    // Delete an incomplete work order
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeleteWorkOrder(int id)
+    {
+        WorkOrder workOrderToDelete = _dbContext.WorkOrders.SingleOrDefault(wo => wo.Id == id);
+        if (workOrderToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.WorkOrders.Remove(workOrderToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent(); // return 204
     }
 }
 
